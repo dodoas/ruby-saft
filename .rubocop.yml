@@ -1,0 +1,72 @@
+# We want Exclude directives from different
+# config files to get merged, not overwritten
+inherit_mode:
+  merge:
+    - Exclude
+
+require:
+  - rubocop-rspec
+  - rubocop-performance
+  - rubocop-rake
+  # Standard's config uses this custom cop,
+  # so it must be loaded
+  - standard
+
+inherit_gem:
+  standard: config/base.yml
+
+inherit_from:
+  - .rubocop_strict.yml
+
+AllCops:
+  TargetRubyVersion: 3.1
+
+# Sometimes we enable metrics cops
+# (which are disabled in Standard by default)
+#
+# Metrics:
+#   Enabled: true
+
+Layout/EmptyLineBetweenDefs:
+  Enabled: false
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: consistent_comma
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+Style/RescueStandardError:
+  EnforcedStyle: explicit
+
+RSpec/BeEq:
+  Enabled: true
+RSpec/BeNil:
+  Enabled: true
+  EnforcedStyle: be
+RSpec/ChangeByZero:
+  Enabled: true
+RSpec/ExampleLength:
+  Max: 40
+RSpec/ExcessiveDocstringSpacing:
+  Enabled: true
+RSpec/FactoryBot/SyntaxMethods:
+  Enabled: False
+RSpec/HookArgument:
+  EnforcedStyle: each
+RSpec/IdenticalEqualityAssertion:
+  Enabled: true
+RSpec/MessageSpies:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Max: 10
+RSpec/MultipleMemoizedHelpers:
+  Enabled: False
+RSpec/Rails/AvoidSetupHook:
+  Enabled: False
+RSpec/StubbedMock:
+  Enabled: false
+RSpec/SubjectDeclaration:
+  Enabled: true
+RSpec/VerifiedDoubleReference:
+  Enabled: true

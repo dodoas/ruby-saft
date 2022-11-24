@@ -1,0 +1,10 @@
+image: ruby:3.1.2
+
+before_script:
+  - ruby --version
+  - gem install bundler:2.3.26
+  - bundle install --jobs "$(nproc)" && bundle check
+
+check:
+  script:
+    - bundle exec rake
