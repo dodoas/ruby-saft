@@ -31,5 +31,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency("zeitwerk", "~> 2.5")
   spec.add_dependency("dry-struct", "~> 1.4")
   spec.add_dependency("nokogiri", "~> 1.13")
-  spec.add_dependency("tubby", "~> 1.1")
+  spec.add_dependency("tubby", "~> 1")
 end

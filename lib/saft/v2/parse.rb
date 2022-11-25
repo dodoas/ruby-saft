@@ -189,9 +189,6 @@ module SAFT::V2
             address: parse(Types::AddressStructure, xml.at_xpath("Address")),
           }
 
-        when Types::ContactHeaderStructure.name
-          parse(Types::ContactInformationStructure, xml)
-
         when Types::HeaderStructure.name
           {
             audit_file_version: xml.at_xpath("AuditFileVersion")&.content,

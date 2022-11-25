@@ -145,10 +145,6 @@ module SAFT::V2::Types
     attribute :mobile_phone, SAFshorttextType.optional.meta(omittable: true)
   end
 
-  class ContactHeaderStructure < ContactInformationStructure
-    attribute :telephone, SAFshorttextType
-  end
-
   class BankAccountStructure < Dry::Struct
     attribute :iban_number, SAFmiddle1textType.optional.meta(omittable: true)
     attribute :bank_account_number, SAFmiddle1textType.optional.meta(omittable: true)

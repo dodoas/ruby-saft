@@ -211,14 +211,6 @@ module SAFT::V2
         xml.UCR(struct.ucr) if struct.ucr
         xml.Address(struct.address) if struct.address
 
-      when Types::ContactHeaderStructure
-        xml.ContactPerson { build(struct.contact_person) }
-        xml.Telephone(struct.telephone) if struct.telephone
-        xml.Fax(struct.fax) if struct.fax
-        xml.Email(struct.email) if struct.email
-        xml.Website(struct.website) if struct.website
-        xml.MobilePhone(struct.mobile_phone) if struct.mobile_phone
-
       when Types::HeaderStructure
         xml.AuditFileVersion(struct.audit_file_version)
         xml.AuditFileCountry(struct.audit_file_country)

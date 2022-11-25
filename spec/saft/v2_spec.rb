@@ -39,8 +39,8 @@ RSpec.describe SAFT::V2 do
     have_attributes(valid?: true, errors: [])
   end
 
-  it "write and read minimal file" do
-    data = {
+  let(:minimal_valid) {
+    {
       header: {
         audit_file_version: "1.10",
         audit_file_country: "NO",
@@ -65,12 +65,41 @@ RSpec.describe SAFT::V2 do
         },
       },
     }
+  }
 
-    described_class::Types::AuditFile[data]
+  it "write and read minimal file" do
+    described_class::Types::AuditFile[minimal_valid]
       .then { described_class.scribe(_1) }
       .tap { expect(described_class.validate(_1)).to(be_xsd_valid) }
       .then { described_class.parse(_1) }
-      .tap { expect(_1.to_hash).to(hash_has_same_data(data)) }
+      .tap { expect(_1.to_hash).to(hash_has_same_data(minimal_valid)) }
+  end
+
+  it "validate return false when invalid with errors" do
+    minimal_valid[:master_files] = {
+      general_ledger_accounts: [
+        {
+          account_id: "1920",
+          account_description: "Bank Account",
+          standard_account_id: "19",
+          account_type: "GL",
+          account_creation_date: Date.civil(1998, 1, 1),
+        },
+      ],
+    }
+
+    content = described_class::Types::AuditFile[minimal_valid].then { described_class.scribe(_1) }
+    expect(described_class.validate(content))
+      .to(
+        have_attributes(
+          valid?: false,
+          errors: [
+            have_attributes(
+              to_s: "26:0: ERROR: Element '{urn:StandardAuditFile-Taxation-Financial:NO}Account': Missing child element(s). Expected is one of ( {urn:StandardAuditFile-Taxation-Financial:NO}OpeningDebitBalance, {urn:StandardAuditFile-Taxation-Financial:NO}OpeningCreditBalance ).",
+            ),
+          ],
+        ),
+      )
   end
 
   describe "Work with big file" do
