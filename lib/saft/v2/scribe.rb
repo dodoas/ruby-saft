@@ -11,8 +11,7 @@ module SAFT::V2
         build_the_xml(xml, audit_file)
       end
 
-      # builder.to_xml(save_with: Nokogiri::XML::Node::SaveOptions::AS_XML)
-      builder.to_xml(save_with: Nokogiri::XML::Node::SaveOptions::DEFAULT_XML)
+      builder.to_xml(save_with: SAFT.nokogiri_save_setting)
     end
 
     private

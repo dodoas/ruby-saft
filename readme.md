@@ -12,6 +12,20 @@ Tested and verified for: None jet, Norway is in development
 
 Even if you are able to create a AuditFile instance it doen't mean it is valid per xsd. There are some nodes where you have to choose this set of nodes or this other set of nodes. It would be possible to create such a structure it dry-stuct as well but we would end up with a lot more Nodes, also a bigger difference on xml structure and structs. 
 
+## Setup
+
+```rb
+# if you use SAF-T to write xmls you probably want the files to be as compact as
+# possible in production but nicely formatted in development end test.
+# default value is AS_XML
+
+if production
+  SAFT.nokogiri_save_setting = Nokogiri::XML::Node::SaveOptions::AS_XML
+else
+  SAFT.nokogiri_save_setting = Nokogiri::XML::Node::SaveOptions::DEFAULT_XML
+end
+```
+
 ## Usage
 
 ```rb

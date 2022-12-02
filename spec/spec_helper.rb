@@ -30,3 +30,5 @@ RSpec.configure do |config|
   config.order = :random
   Kernel.srand(config.seed)
 end
+
+SAFT.nokogiri_save_setting = Nokogiri::XML::Node::SaveOptions::DEFAULT_XML
