@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuditFile xmlns="urn:StandardAuditFile-Taxation-Financial:NO">
+  <Header>
+    <AuditFileVersion>1.10</AuditFileVersion>
+    <AuditFileCountry>NO</AuditFileCountry>
+    <AuditFileDateCreated>2022-11-14</AuditFileDateCreated>
+    <SoftwareCompanyName>AccWare</SoftwareCompanyName>
+    <SoftwareID>AccWare.no</SoftwareID>
+    <SoftwareVersion>1.0</SoftwareVersion>
+    <Company>
+      <RegistrationNumber>101102103</RegistrationNumber>
+      <Name>Ice ice baby</Name>
+      <Address>
+        <StreetName>Cold street</StreetName>
+        <Number>4</Number>
+        <AdditionalAddressDetail>Gate C</AdditionalAddressDetail>
+        <Building>L</Building>
+        <City>Ice flak</City>
+        <PostalCode>0000</PostalCode>
+        <Region>South pole</Region>
+        <Country>XX</Country>
+        <AddressType>PostalAddress</AddressType>
+      </Address>
+      <Address>
+        <StreetName>Slight less cold street</StreetName>
+      </Address>
+      <Contact>
+        <ContactPerson>
+          <Title>Director</Title>
+          <FirstName>Iselin</FirstName>
+          <Initials>IS</Initials>
+          <LastNamePrefix>Von</LastNamePrefix>
+          <LastName>Syringe</LastName>
+          <BirthName>Joe</BirthName>
+          <Salutation>Holy lowly mac sir</Salutation>
+          <OtherTitles>Director</OtherTitles>
+          <OtherTitles>Manager</OtherTitles>
+          <OtherTitles>Worker</OtherTitles>
+        </ContactPerson>
+        <Telephone>+00101010101</Telephone>
+        <Fax>65468156</Fax>
+        <Email>ice@ice.baby</Email>
+        <Website>ice.baby</Website>
+        <MobilePhone>+00101010101</MobilePhone>
+      </Contact>
+      <Contact>
+        <ContactPerson>
+          <FirstName>Tor</FirstName>
+          <LastName>Incognito</LastName>
+        </ContactPerson>
+      </Contact>
+      <TaxRegistration>
+        <TaxRegistrationNumber>3159MVA</TaxRegistrationNumber>
+        <TaxAuthority>Skatteetaten</TaxAuthority>
+        <TaxVerificationDate>2020-01-01</TaxVerificationDate>
+      </TaxRegistration>
+      <TaxRegistration>
+        <TaxRegistrationNumber>NO3159MVA</TaxRegistrationNumber>
+        <TaxAuthority>Skatteetaten</TaxAuthority>
+      </TaxRegistration>
+      <BankAccount>
+        <IBANNumber>NO000000123123</IBANNumber>
+        <BIC>NOFO</BIC>
+        <CurrencyCode>NOK</CurrencyCode>
+        <GeneralLedgerAccountID>1920</GeneralLedgerAccountID>
+      </BankAccount>
+      <BankAccount>
+        <BankAccountNumber>005500550044</BankAccountNumber>
+        <BankAccountName>High interest</BankAccountName>
+        <SortCode>95</SortCode>
+      </BankAccount>
+      <BankAccount>
+        <IBANNumber>NO00000019549</IBANNumber>
+      </BankAccount>
+    </Company>
+    <DefaultCurrencyCode>NOK</DefaultCurrencyCode>
+    <SelectionCriteria>
+      <TaxReportingJurisdiction>The pinup man</TaxReportingJurisdiction>
+      <CompanyEntity>The pinup CO</CompanyEntity>
+      <SelectionStartDate>2020-01-01</SelectionStartDate>
+      <SelectionEndDate>2020-12-31</SelectionEndDate>
+      <DocumentType>All kind are included</DocumentType>
+      <OtherCriteria>Elm is cool</OtherCriteria>
+      <OtherCriteria>Ruby is cool</OtherCriteria>
+      <OtherCriteria>Javascript is "cool"</OtherCriteria>
+    </SelectionCriteria>
+    <HeaderComment>SAF-T financial accounting export by AccWare. 14. november 2022 07:14</HeaderComment>
+    <TaxAccountingBasis>A</TaxAccountingBasis>
+    <TaxEntity>Company / Division / Branch</TaxEntity>
+    <UserID>Isabel</UserID>
+    <AuditFileSender>
+      <RegistrationNumber>NO909819</RegistrationNumber>
+      <Name>Mc been</Name>
+      <Address>
+        <StreetName>std2</StreetName>
+      </Address>
+      <Address>
+        <StreetName>std3</StreetName>
+      </Address>
+      <Contact>
+        <ContactPerson>
+          <FirstName>std4</FirstName>
+          <LastName>std5</LastName>
+        </ContactPerson>
+      </Contact>
+      <Contact>
+        <ContactPerson>
+          <FirstName>std6</FirstName>
+          <LastName>std7</LastName>
+        </ContactPerson>
+      </Contact>
+      <TaxRegistration>
+        <TaxRegistrationNumber>std8</TaxRegistrationNumber>
+        <TaxAuthority>Skatteetaten</TaxAuthority>
+      </TaxRegistration>
+      <TaxRegistration>
+        <TaxRegistrationNumber>std9</TaxRegistrationNumber>
+        <TaxAuthority>Skatteetaten</TaxAuthority>
+      </TaxRegistration>
+      <BankAccount>
+        <IBANNumber>std10</IBANNumber>
+      </BankAccount>
+      <BankAccount>
+        <IBANNumber>std10</IBANNumber>
+      </BankAccount>
+    </AuditFileSender>
+  </Header>
+  <MasterFiles>
+    <GeneralLedgerAccounts>
+      <Account>
+        <AccountID>1920</AccountID>
+        <AccountDescription>Bank Account</AccountDescription>
+        <StandardAccountID>19</StandardAccountID>
+        <GroupingCategory>A</GroupingCategory>
+        <GroupingCode>A</GroupingCode>
+        <AccountType>GL</AccountType>
+        <AccountCreationDate>1998-01-01</AccountCreationDate>
+        <OpeningDebitBalance>10.0</OpeningDebitBalance>
+        <ClosingDebitBalance>12.0</ClosingDebitBalance>
+      </Account>
+      <Account>
+        <AccountID>1920</AccountID>
+        <AccountDescription>Bank Account</AccountDescription>
+        <AccountType>GL</AccountType>
+        <OpeningCreditBalance>12.0</OpeningCreditBalance>
+        <ClosingCreditBalance>13.0</ClosingCreditBalance>
+      </Account>
+    </GeneralLedgerAccounts>
+    <Customers>
+      <Customer>
+        <Name>Acme</Name>
+        <Address/>
+        <CustomerID>C1</CustomerID>
+        <SelfBillingIndicator>No</SelfBillingIndicator>
+        <AccountID>1500:12</AccountID>
+        <OpeningDebitBalance>1.0</OpeningDebitBalance>
+        <ClosingDebitBalance>2.0</ClosingDebitBalance>
+        <PartyInfo>
+          <PaymentTerms>
+            <Days>5</Days>
+            <Months>1</Months>
+            <CashDiscountDays>10</CashDiscountDays>
+            <CashDiscountRate>8.41</CashDiscountRate>
+            <FreeBillingMonth>true</FreeBillingMonth>
+          </PaymentTerms>
+          <NaceCode>Nice</NaceCode>
+          <CurrencyCode>SEK</CurrencyCode>
+          <Type>Company</Type>
+          <Status>Active</Status>
+          <Analysis>
+            <AnalysisType>PRO</AnalysisType>
+            <AnalysisID>1</AnalysisID>
+          </Analysis>
+          <Analysis>
+            <AnalysisType>PRO</AnalysisType>
+            <AnalysisID>2</AnalysisID>
+          </Analysis>
+          <Notes>Secrets ***************</Notes>
+        </PartyInfo>
+      </Customer>
+      <Customer>
+        <Name>Acme the second</Name>
+        <Address/>
+        <CustomerID>C2</CustomerID>
+        <OpeningCreditBalance>3.0</OpeningCreditBalance>
+        <ClosingCreditBalance>4.0</ClosingCreditBalance>
+      </Customer>
+      <Customer>
+        <Name>Acme the Suied</Name>
+        <Address/>
+        <CustomerID>C3</CustomerID>
+      </Customer>
+    </Customers>
+    <Suppliers>
+      <Supplier>
+        <Name>Been</Name>
+        <Address/>
+        <SupplierID>S1</SupplierID>
+        <SelfBillingIndicator>No</SelfBillingIndicator>
+        <AccountID>1500:12</AccountID>
+        <OpeningDebitBalance>1.0</OpeningDebitBalance>
+        <ClosingDebitBalance>2.0</ClosingDebitBalance>
+        <PartyInfo>
+          <PaymentTerms>
+            <Days>5</Days>
+            <Months>1</Months>
+            <CashDiscountDays>10</CashDiscountDays>
+            <CashDiscountRate>8.41</CashDiscountRate>
+            <FreeBillingMonth>true</FreeBillingMonth>
+          </PaymentTerms>
+          <NaceCode>Nice</NaceCode>
+          <CurrencyCode>SEK</CurrencyCode>
+          <Type>Company</Type>
+          <Status>Active</Status>
+          <Analysis>
+            <AnalysisType>PRO</AnalysisType>
+            <AnalysisID>1</AnalysisID>
+          </Analysis>
+          <Analysis>
+            <AnalysisType>PRO</AnalysisType>
+            <AnalysisID>2</AnalysisID>
+          </Analysis>
+          <Notes>Secrets ***************</Notes>
+        </PartyInfo>
+      </Supplier>
+      <Supplier>
+        <Name>Been the second</Name>
+        <Address/>
+        <SupplierID>S2</SupplierID>
+        <OpeningCreditBalance>3.0</OpeningCreditBalance>
+        <ClosingCreditBalance>4.0</ClosingCreditBalance>
+      </Supplier>
+      <Supplier>
+        <Name>Been the Suied</Name>
+        <Address/>
+        <SupplierID>S3</SupplierID>
+      </Supplier>
+    </Suppliers>
+    <TaxTable>
+      <TaxTableEntry>
+        <TaxType>MVA</TaxType>
+        <Description>Merverdiavgift</Description>
+        <TaxCodeDetails>
+          <TaxCode>52</TaxCode>
+          <EffectiveDate>2020-01-01</EffectiveDate>
+          <ExpirationDate>2030-01-01</ExpirationDate>
+          <Description>TAX with code 52</Description>
+          <TaxPercentage>15.0</TaxPercentage>
+          <Country>No</Country>
+          <StandardTaxCode>15</StandardTaxCode>
+          <Compensation>true</Compensation>
+          <BaseRate>100.0</BaseRate>
+          <BaseRate>98.0</BaseRate>
+        </TaxCodeDetails>
+        <TaxCodeDetails>
+          <TaxCode>53</TaxCode>
+          <Country>No</Country>
+          <StandardTaxCode>16</StandardTaxCode>
+          <BaseRate>100.0</BaseRate>
+        </TaxCodeDetails>
+      </TaxTableEntry>
+      <TaxTableEntry>
+        <TaxType>MVA</TaxType>
+        <Description>Merverdiavgift</Description>
+        <TaxCodeDetails>
+          <TaxCode>53</TaxCode>
+          <Country>No</Country>
+          <StandardTaxCode>16</StandardTaxCode>
+          <BaseRate>100.0</BaseRate>
+        </TaxCodeDetails>
+      </TaxTableEntry>
+    </TaxTable>
+    <AnalysisTypeTable>
+      <AnalysisTypeTableEntry>
+        <AnalysisType>T</AnalysisType>
+        <AnalysisTypeDescription>Type of voucher</AnalysisTypeDescription>
+        <AnalysisID>M</AnalysisID>
+        <AnalysisIDDescription>Manual</AnalysisIDDescription>
+        <StartDate>2018-01-01</StartDate>
+        <EndDate>2028-01-01</EndDate>
+        <Status>Active</Status>
+        <Analysis>
+          <AnalysisType>K</AnalysisType>
+          <AnalysisID>1</AnalysisID>
+        </Analysis>
+        <Analysis>
+          <AnalysisType>K</AnalysisType>
+          <AnalysisID>2</AnalysisID>
+        </Analysis>
+      </AnalysisTypeTableEntry>
+      <AnalysisTypeTableEntry>
+        <AnalysisType>T</AnalysisType>
+        <AnalysisTypeDescription>Type of voucher</AnalysisTypeDescription>
+        <AnalysisID>B</AnalysisID>
+        <AnalysisIDDescription>Bank</AnalysisIDDescription>
+      </AnalysisTypeTableEntry>
+      <AnalysisTypeTableEntry>
+        <AnalysisType>PRO</AnalysisType>
+        <AnalysisTypeDescription>Project</AnalysisTypeDescription>
+        <AnalysisID>1</AnalysisID>
+        <AnalysisIDDescription>fakturaBank</AnalysisIDDescription>
+      </AnalysisTypeTableEntry>
+    </AnalysisTypeTable>
+    <Owners>
+      <Owner>
+        <Name>Been O'reily</Name>
+        <Address/>
+        <OwnerID>ow15</OwnerID>
+        <AccountID>2940:5</AccountID>
+      </Owner>
+      <Owner>
+        <Name>mr Been</Name>
+        <Address/>
+      </Owner>
+    </Owners>
+  </MasterFiles>
+  <GeneralLedgerEntries>
+    <NumberOfEntries>5</NumberOfEntries>
+    <TotalDebit>6.0</TotalDebit>
+    <TotalCredit>7.0</TotalCredit>
+    <Journal>
+      <JournalID>Jo1</JournalID>
+      <Description>Journal number 1</Description>
+      <Type>no idea</Type>
+      <Transaction>
+        <TransactionID>Tra1</TransactionID>
+        <Period>3</Period>
+        <PeriodYear>2020</PeriodYear>
+        <TransactionDate>2020-03-10</TransactionDate>
+        <SourceID>Boho</SourceID>
+        <TransactionType>normal</TransactionType>
+        <Description>From the bank</Description>
+        <BatchID>12</BatchID>
+        <SystemEntryDate>2020-03-12</SystemEntryDate>
+        <GLPostingDate>2020-03-10</GLPostingDate>
+        <SystemID>12-651-8951</SystemID>
+        <Line>
+          <RecordID>line-18</RecordID>
+          <AccountID>1920</AccountID>
+          <Analysis>
+            <AnalysisType>PRO</AnalysisType>
+            <AnalysisID>1</AnalysisID>
+          </Analysis>
+          <Analysis>
+            <AnalysisType>PRO</AnalysisType>
+            <AnalysisID>2</AnalysisID>
+          </Analysis>
+          <ValueDate>2020-03-10</ValueDate>
+          <SourceDocumentID>159</SourceDocumentID>
+          <CustomerID>15</CustomerID>
+          <Description>Something</Description>
+          <DebitAmount>
+            <Amount>598.0</Amount>
+          </DebitAmount>
+          <TaxInformation>
+            <TaxType>MVA</TaxType>
+            <TaxCode>52</TaxCode>
+            <TaxPercentage>25.0</TaxPercentage>
+            <Country>NO</Country>
+            <TaxBase>9000.0</TaxBase>
+            <TaxBaseDescription>Some random description</TaxBaseDescription>
+            <TaxAmount>
+              <Amount>593.0</Amount>
+            </TaxAmount>
+            <TaxExemptionReason>550</TaxExemptionReason>
+            <TaxDeclarationPeriod>2020-04</TaxDeclarationPeriod>
+          </TaxInformation>
+          <TaxInformation>
+            <TaxAmount>
+              <Amount>5.0</Amount>
+            </TaxAmount>
+          </TaxInformation>
+          <ReferenceNumber>1512</ReferenceNumber>
+          <CID>21</CID>
+          <DueDate>2020-04-10</DueDate>
+          <Quantity>2020.0</Quantity>
+          <CrossReference>189</CrossReference>
+          <SystemEntryTime>2020-04-30T00:00:08</SystemEntryTime>
+          <OwnerID>Ow-2</OwnerID>
+        </Line>
+        <Line>
+          <RecordID>line-18</RecordID>
+          <AccountID>1921</AccountID>
+          <SupplierID>13</SupplierID>
+          <Description>Something new</Description>
+          <CreditAmount>
+            <Amount>593.0</Amount>
+          </CreditAmount>
+        </Line>
+      </Transaction>
+      <Transaction>
+        <TransactionID>Tra2</TransactionID>
+        <Period>3</Period>
+        <PeriodYear>2020</PeriodYear>
+        <TransactionDate>2020-03-10</TransactionDate>
+        <Description>From the bank</Description>
+        <SystemEntryDate>2020-03-12</SystemEntryDate>
+        <GLPostingDate>2020-03-10</GLPostingDate>
+        <Line>
+          <RecordID>line-18</RecordID>
+          <AccountID>1921</AccountID>
+          <SupplierID>13</SupplierID>
+          <Description>Something new</Description>
+          <CreditAmount>
+            <Amount>123.0</Amount>
+            <CurrencyCode>SEK</CurrencyCode>
+            <CurrencyAmount>110.0</CurrencyAmount>
+            <ExchangeRate>99.56</ExchangeRate>
+          </CreditAmount>
+        </Line>
+      </Transaction>
+    </Journal>
+    <Journal>
+      <JournalID>Jo2</JournalID>
+      <Description>Journal number 2</Description>
+      <Type>no idea</Type>
+    </Journal>
+  </GeneralLedgerEntries>
+</AuditFile>

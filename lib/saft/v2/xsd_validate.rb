@@ -7,11 +7,7 @@ XSD_PATH = Pathname.new(__dir__) + ".." + ".." + ".." + "vendor" + "SAF-T_Financ
 
 module SAFT::V2
   class XsdValidate
-    attr_reader :content
-
     def initialize(content)
-      @content = content
-
       @xml_errors = []
       doc = Nokogiri::XML(content)
       @xml_errors.push(*doc.errors)
