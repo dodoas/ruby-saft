@@ -76,7 +76,13 @@ RSpec.describe SAFT::V2 do
       .tap { expect(_1.to_hash).to(hash_has_same_data(minimal_valid)) }
   end
 
-  it "validate return false when invalid with errors" do
+  it "can export minimal file as HTML" do
+    audit_file = described_class::Types::AuditFile[minimal_valid]
+
+    expect { described_class.to_html(audit_file).to_s }.not_to(raise_error)
+  end
+
+  it "validate returns false when invalid with errors" do
     minimal_valid[:master_files] = {
       general_ledger_accounts: [
         {
@@ -567,6 +573,12 @@ RSpec.describe SAFT::V2 do
         .tap { expect(described_class.validate(_1)).to(be_xsd_valid) }
         .then { described_class.parse(_1) }
         .tap { expect(_1.to_hash).to(hash_has_same_data(data)) }
+    end
+
+    it "can export biggest as HTML" do
+      audit_file = described_class::Types::AuditFile[biggest]
+
+      expect { described_class.to_html(audit_file).to_s }.not_to(raise_error)
     end
 
     it "full file" do
