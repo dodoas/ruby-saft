@@ -10,6 +10,10 @@ loader.setup
 loader.do_not_eager_load("#{__dir__}/saft/v2/html.rb")
 
 module SAFT
+  def self.gem_root
+    Pathname(__dir__).parent
+  end
+
   def self.nokogiri_save_setting=(value)
     @nokogiri_save_setting = value
   end
