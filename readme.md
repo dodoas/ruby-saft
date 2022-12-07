@@ -69,3 +69,18 @@ Every electronic ERP system has to implement SAF-T Financial. SAF-T Cash
 Register is either for the cash register to implement or the ERP, I don't know
 yet. (I believe Cash Register since there should be event log which include
 open drawer, copy receipt, etc)
+
+## Html
+
+We also ship a render for html view. It also ships styles
+```rb
+audit_file = SAFT::V2::Types::AuditFile.call({})
+html = SAFT::V2.to_html(audit_file)
+css = SAFT::V2::HTML.css
+css_path = SAFT::V2::HTML.css_path
+```
+
+### Dev to rebuild styles
+```
+pnpm tailwindcss -i lib/saft/v2/html.css -o ./lib/saft/v2/html_dist.css
+```

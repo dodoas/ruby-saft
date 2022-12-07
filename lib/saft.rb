@@ -4,7 +4,7 @@ require "zeitwerk"
 require "nokogiri"
 
 loader = Zeitwerk::Loader.for_gem
-loader.inflector.inflect("saft" => "SAFT")
+loader.inflector.inflect("saft" => "SAFT", "html" => "HTML")
 loader.setup
 
 module SAFT

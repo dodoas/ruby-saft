@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "nokogiri"
+require "dry-struct"
 
 module SAFT::V2
   def self.parse(xml_content)
@@ -15,7 +16,13 @@ module SAFT::V2
     Scribe.write_xml(audit_file)
   end
 
-  def self.validate(content)
-    XsdValidate.new(content)
+  def self.validate(xml_content)
+    XsdValidate.new(xml_content)
+  end
+
+  def self.to_html(audit_file)
+    raise ArgumentError unless audit_file.is_a?(Types::AuditFile)
+
+    HTML.render(audit_file)
   end
 end
