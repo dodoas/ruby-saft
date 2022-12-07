@@ -2,7 +2,7 @@
 
 require "dry-struct"
 
-# This file containt the xml intermidiate structure
+# This file contains the xml intermediate structure
 # The node names are generated from the XSD located in
 # ./vendor/SAF-T_Financial_Schema1.10.xsd. There are at least a couple of nodes
 # which are ignored since  it has the comment "Not in use.". I don't look at it as
@@ -250,7 +250,7 @@ module SAFT::V2::Types
   class TaxTableEntry < Dry::Struct
     attribute :tax_type, SAFcodeType
     attribute :description, SAFlongtextType
-    attribute :tax_code_details, Types::Array.of(TaxCodeDetails)
+    attribute :tax_code_details, Types::Array.of(TaxCodeDetails).constrained(min_size: 1)
   end
 
   class AnalysisTypeTableEntry < Dry::Struct

@@ -2,6 +2,8 @@
 
 require "saft"
 
+Dir[Pathname.new(__dir__).join("support/**/*.rb")].sort.each { |f| require f }
+
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   config.filter_run_when_matching(:focus)

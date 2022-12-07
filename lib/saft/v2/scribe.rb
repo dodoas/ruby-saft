@@ -95,12 +95,7 @@ module SAFT::V2
         xml.AccountID(struct.account_id) if struct.account_id
 
       when Types::CompanyHeaderStructure
-        xml.RegistrationNumber(struct.registration_number)
-        xml.Name(struct.name) if struct.name
-        struct.addresses&.each { |address| xml.Address { build(address) } }
-        struct.contacts&.each { |contact| xml.Contact { build(contact) } }
-        struct.tax_registrations&.each { |tax_registration| xml.TaxRegistration { build(tax_registration) } }
-        struct.bank_accounts&.each { |bank_account| xml.BankAccount { build(bank_account) } }
+        build_company_structure(struct)
 
       when Types::CompanyStructure
         build_company_structure(struct)
