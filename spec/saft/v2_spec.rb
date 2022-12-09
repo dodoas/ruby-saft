@@ -7,7 +7,7 @@ require "pp" # rubocop:disable Lint/RedundantRequireStatement
 require "deep_compact"
 
 RSpec.describe SAFT::V2 do
-  include FixtureHelper
+  include(FixtureHelper)
   using(DeepCompact)
 
   RSpec::Matchers.define(:hash_has_same_data) do |expected|
@@ -581,13 +581,19 @@ RSpec.describe SAFT::V2 do
       expect { described_class.to_html(audit_file).to_s }.not_to(raise_error)
     end
 
-    it "full file" do
-      described_class::Types::AuditFile[biggest]
-        .then { described_class.scribe(_1) }
-        .tap { expect(_1).to(eq(fixture_read("biggest.xml"))) }
-        .tap { expect(described_class.validate(_1)).to(be_xsd_valid) }
-        .then { described_class.parse(_1) }
-        .tap { expect(_1.to_hash).to(hash_has_same_data(biggest)) }
+    [
+      described_class::Types::Relaxed::AuditFile,
+      described_class::Types::Strict::AuditFile,
+      described_class::Types::Sliced::AuditFile,
+    ].each do |audit_file|
+      it "full file as #{audit_file.name}" do
+        audit_file[biggest]
+          .then { described_class.scribe(_1) }
+          .tap { expect(_1).to(eq(fixture_read("biggest.xml"))) }
+          .tap { expect(described_class.validate(_1)).to(be_xsd_valid) }
+          .then { described_class.parse(_1) }
+          .tap { expect(_1.to_hash).to(hash_has_same_data(biggest)) }
+      end
     end
   end
 end

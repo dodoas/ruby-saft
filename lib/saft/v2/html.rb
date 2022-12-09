@@ -207,8 +207,7 @@ module SAFT::V2
             }
             t.tbody {
               @accounts.each do |account|
-                std_account = SAFT::V2::Norway
-                  .std_account(account.standard_account_id)
+                std_account = SAFT::V2::Norway.std_account(account.standard_account_id)
                 std_account_title = "Not found"
                 if std_account
                   std_account_title = <<~TEXT
@@ -313,20 +312,19 @@ module SAFT::V2
             }
             t.tbody {
               @tax_table.each { |table|
-                vat_code = SAFT::V2::Norway
-                  .vat_code(detail.standard_tax_code)
-                vat_code_title = "Not found"
-                if std_account
-                  vat_code_title = <<~TEXT
-                    Vat Code #{std_account.code}
-                    #{std_account.description_en}
-                    #{std_account.description_no}
-                    #{HTML.format_big_decimal(std_account.tax_rate) if std_account.tax_rate}
-                    #{"Can be used for compensation" if std_account.compensation}
-                  TEXT
-                end
-
                 table.tax_code_details.each { |detail|
+                  vat_code = SAFT::V2::Norway.vat_code(detail.standard_tax_code)
+                  vat_code_title = "Not found"
+                  if vat_code
+                    vat_code_title = <<~TEXT
+                      Vat Code #{vat_code.code}
+                      #{vat_code.description_en}
+                      #{vat_code.description_no}
+                      #{vat_code.tax_rate}
+                      #{"Can be used for compensation" if vat_code.compensation}
+                    TEXT
+                  end
+
                   t.tr {
                     t.td(detail.tax_code)
                     t.td(detail.description)
