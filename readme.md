@@ -57,6 +57,12 @@ validations.valid? # true || false
 validations.errors? # [] # array of Nokogiri::XML::SyntaxError from xsd errors
 ```
 
+We supply three types of AuditFile which all can be used to generate the xml.
+Relaxed, Strict and Sliced. Relaxed does not have any constrains on text length
+so you are more likely to have XSD errors this way. Strict has more constraints
+in place, it would raise Dry::Struct::Error when called with invalid options.
+And the last mode, Sliced. It would cut the string at max length available.
+
 ## Norway 
 
 Main site for skatteetaten https://www.skatteetaten.no/en/business-and-organisation/start-and-run/best-practices-accounting-and-cash-register-systems/saf-t-financial/documentation/

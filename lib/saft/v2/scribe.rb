@@ -41,8 +41,10 @@ module SAFT::V2
     def build(struct)
       return unless struct
 
-      case struct
-      when Types::AuditFile
+      klass = struct.class.ancestors.detect { _1.name&.start_with?("SAFT::V2") }
+      # We do .name.split("::").last because this has to support all three types
+      case klass.name.split("::").last
+      when Types::AuditFile.name.split("::").last
         xml.Header { build(struct.header) }
         if struct.master_files
           xml.MasterFiles { build(struct.master_files) }
@@ -51,7 +53,7 @@ module SAFT::V2
           xml.GeneralLedgerEntries { build(struct.general_ledger_entries) }
         end
 
-      when Types::Header
+      when Types::Header.name.split("::").last
         xml.AuditFileVersion(struct.audit_file_version)
         xml.AuditFileCountry(struct.audit_file_country)
         xml.AuditFileDateCreated(struct.audit_file_date_created)
@@ -67,7 +69,7 @@ module SAFT::V2
         xml.UserID(struct.user_id) if struct.user_id
         xml.AuditFileSender { build(struct.audit_file_sender) } if struct.audit_file_sender
 
-      when Types::Customer
+      when Types::Customer.name.split("::").last
         build_company_structure(struct)
         xml.CustomerID(struct.customer_id)
         xml.SelfBillingIndicator(struct.self_billing_indicator) if struct.self_billing_indicator
@@ -78,7 +80,7 @@ module SAFT::V2
         xml.ClosingCreditBalance(struct.closing_credit_balance.to_s("F")) if struct.closing_credit_balance
         xml.PartyInfo { build(struct.party_info) } if struct.party_info
 
-      when Types::Supplier
+      when Types::Supplier.name.split("::").last
         build_company_structure(struct)
         xml.SupplierID(struct.supplier_id)
         xml.SelfBillingIndicator(struct.self_billing_indicator) if struct.self_billing_indicator
@@ -89,18 +91,18 @@ module SAFT::V2
         xml.ClosingCreditBalance(struct.closing_credit_balance.to_s("F")) if struct.closing_credit_balance
         xml.PartyInfo { build(struct.party_info) } if struct.party_info
 
-      when Types::Owner
+      when Types::Owner.name.split("::").last
         build_company_structure(struct)
         xml.OwnerID(struct.owner_id) if struct.owner_id
         xml.AccountID(struct.account_id) if struct.account_id
 
-      when Types::CompanyHeaderStructure
+      when Types::CompanyHeaderStructure.name.split("::").last
         build_company_structure(struct)
 
-      when Types::CompanyStructure
+      when Types::CompanyStructure.name.split("::").last
         build_company_structure(struct)
 
-      when Types::AddressStructure
+      when Types::AddressStructure.name.split("::").last
         xml.StreetName(struct.street_name) if struct.street_name
         xml.Number(struct.number) if struct.number
         xml.AdditionalAddressDetail(struct.additional_address_detail) if struct.additional_address_detail
@@ -111,7 +113,7 @@ module SAFT::V2
         xml.Country(struct.country) if struct.country
         xml.AddressType(struct.address_type) if struct.address_type
 
-      when Types::ContactInformationStructure
+      when Types::ContactInformationStructure.name.split("::").last
         xml.ContactPerson { build(struct.contact_person) }
         xml.Telephone(struct.telephone) if struct.telephone
         xml.Fax(struct.fax) if struct.fax
@@ -119,12 +121,12 @@ module SAFT::V2
         xml.Website(struct.website) if struct.website
         xml.MobilePhone(struct.mobile_phone) if struct.mobile_phone
 
-      when Types::TaxIDStructure
+      when Types::TaxIDStructure.name.split("::").last
         xml.TaxRegistrationNumber(struct.tax_registration_number)
         xml.TaxAuthority(struct.tax_authority) if struct.tax_authority
         xml.TaxVerificationDate(struct.tax_verification_date) if struct.tax_verification_date
 
-      when Types::BankAccountStructure
+      when Types::BankAccountStructure.name.split("::").last
         xml.IBANNumber(struct.iban_number) if struct.iban_number
         xml.BankAccountNumber(struct.bank_account_number) if struct.bank_account_number
         xml.BankAccountName(struct.bank_account_name) if struct.bank_account_name
@@ -133,7 +135,7 @@ module SAFT::V2
         xml.CurrencyCode(struct.currency_code) if struct.currency_code
         xml.GeneralLedgerAccountID(struct.general_ledger_account_id) if struct.general_ledger_account_id
 
-      when Types::PersonNameStructure
+      when Types::PersonNameStructure.name.split("::").last
         xml.Title(struct.title) if struct.title
         xml.FirstName(struct.first_name)
         xml.Initials(struct.initials) if struct.initials
@@ -143,7 +145,7 @@ module SAFT::V2
         xml.Salutation(struct.salutation) if struct.salutation
         struct.other_titles&.each { xml.OtherTitles(_1) }
 
-      when Types::SelectionCriteriaStructure
+      when Types::SelectionCriteriaStructure.name.split("::").last
         xml.TaxReportingJurisdiction(struct.tax_reporting_jurisdiction) if struct.tax_reporting_jurisdiction
         xml.CompanyEntity(struct.company_entity) if struct.company_entity
         xml.SelectionStartDate(struct.selection_start_date) if struct.selection_start_date
@@ -155,22 +157,22 @@ module SAFT::V2
         xml.DocumentType(struct.document_type) if struct.document_type
         struct.other_criterias&.each { |criteria| xml.OtherCriteria(criteria) }
 
-      when Types::AmountStructure
+      when Types::AmountStructure.name.split("::").last
         xml.Amount(struct.amount.to_s("F"))
         xml.CurrencyCode(struct.currency_code) if struct.currency_code
         xml.CurrencyAmount(struct.currency_amount.to_s("F")) if struct.currency_amount
         xml.ExchangeRate(struct.exchange_rate.to_s("F")) if struct.exchange_rate
 
-      when Types::AnalysisStructure
+      when Types::AnalysisStructure.name.split("::").last
         xml.AnalysisType(struct.analysis_type) if struct.analysis_type
         xml.AnalysisID(struct.analysis_id) if struct.analysis_id
         xml.AnalysisAmount { build(struct.analysis_amount) } if struct.analysis_amount
 
-      when Types::AnalysisPartyInfoStructure
+      when Types::AnalysisPartyInfoStructure.name.split("::").last
         xml.AnalysisType(struct.analysis_type)
         xml.AnalysisID(struct.analysis_id)
 
-      when Types::TaxInformationStructure
+      when Types::TaxInformationStructure.name.split("::").last
         xml.TaxType(struct.tax_type) if struct.tax_type
         xml.TaxCode(struct.tax_code) if struct.tax_code
         xml.TaxPercentage(struct.tax_percentage.to_s("F")) if struct.tax_percentage
@@ -181,14 +183,14 @@ module SAFT::V2
         xml.TaxExemptionReason(struct.tax_exemption_reason) if struct.tax_exemption_reason
         xml.TaxDeclarationPeriod(struct.tax_declaration_period) if struct.tax_declaration_period
 
-      when Types::PaymentTerms
+      when Types::PaymentTerms.name.split("::").last
         xml.Days(struct.days) if struct.days
         xml.Months(struct.months) if struct.months
         xml.CashDiscountDays(struct.cash_discount_days) if struct.cash_discount_days
         xml.CashDiscountRate(struct.cash_discount_rate.to_s("F")) if struct.cash_discount_rate
         xml.FreeBillingMonth(struct.free_billing_month) if struct.free_billing_month
 
-      when Types::PartyInfoStructure
+      when Types::PartyInfoStructure.name.split("::").last
         xml.PaymentTerms { build(struct.payment_terms) } if struct.payment_terms
         xml.NaceCode(struct.nace_code) if struct.nace_code
         xml.CurrencyCode(struct.currency_code) if struct.currency_code
@@ -197,7 +199,7 @@ module SAFT::V2
         struct.analyses&.each { |analysis| xml.Analysis { build(analysis) } }
         xml.Notes(struct.notes) if struct.notes
 
-      when Types::ShippingPointStructure
+      when Types::ShippingPointStructure.name.split("::").last
         xml.DeliveryID(struct.delivery_id) if struct.delivery_id
         xml.DeliveryDate(struct.delivery_date) if struct.delivery_date
         xml.WarehouseID(struct.warehouse_id) if struct.warehouse_id
@@ -205,7 +207,7 @@ module SAFT::V2
         xml.UCR(struct.ucr) if struct.ucr
         xml.Address(struct.address) if struct.address
 
-      when Types::HeaderStructure
+      when Types::HeaderStructure.name.split("::").last
         xml.AuditFileVersion(struct.audit_file_version)
         xml.AuditFileCountry(struct.audit_file_country)
         xml.AuditFileDateCreated(struct.audit_file_date_created)
@@ -217,7 +219,7 @@ module SAFT::V2
         xml.SelectionCriteria { build(struct.selection_criteria) } if struct.selection_criteria
         xml.HeaderComment(struct.header_comment) if struct.header_comment
 
-      when Types::Account
+      when Types::Account.name.split("::").last
         xml.AccountID(struct.account_id)
         xml.AccountDescription(struct.account_description)
         xml.StandardAccountID(struct.standard_account_id) if struct.standard_account_id
@@ -230,7 +232,7 @@ module SAFT::V2
         xml.ClosingDebitBalance(struct.closing_debit_balance.to_s("F")) if struct.closing_debit_balance
         xml.ClosingCreditBalance(struct.closing_credit_balance.to_s("F")) if struct.closing_credit_balance
 
-      when Types::TaxCodeDetails
+      when Types::TaxCodeDetails.name.split("::").last
         xml.TaxCode(struct.tax_code)
         xml.EffectiveDate(struct.effective_date) if struct.effective_date
         xml.ExpirationDate(struct.expiration_date) if struct.expiration_date
@@ -241,12 +243,12 @@ module SAFT::V2
         xml.Compensation(struct.compensation) if struct.compensation
         struct.base_rates&.each { xml.BaseRate(_1.to_s("F")) }
 
-      when Types::TaxTableEntry
+      when Types::TaxTableEntry.name.split("::").last
         xml.TaxType(struct.tax_type) if struct.tax_type
         xml.Description(struct.description) if struct.description
         struct.tax_code_details&.each { |tax_code_detail| xml.TaxCodeDetails { build(tax_code_detail) } }
 
-      when Types::AnalysisTypeTableEntry
+      when Types::AnalysisTypeTableEntry.name.split("::").last
         xml.AnalysisType(struct.analysis_type)
         xml.AnalysisTypeDescription(struct.analysis_type_description)
         xml.AnalysisID(struct.analysis_id)
@@ -256,7 +258,7 @@ module SAFT::V2
         xml.Status(struct.status) if struct.status
         struct.analyses&.each { |analysis| xml.Analysis { build(analysis) } }
 
-      when Types::MasterFiles
+      when Types::MasterFiles.name.split("::").last
         if struct.general_ledger_accounts
           xml.GeneralLedgerAccounts {
             struct.general_ledger_accounts.each do |account|
@@ -305,7 +307,7 @@ module SAFT::V2
           }
         end
 
-      when Types::Line
+      when Types::Line.name.split("::").last
         xml.RecordID(struct.record_id)
         xml.AccountID(struct.account_id)
         struct.analyses&.each { |analysis| xml.Analysis { build(analysis) } }
@@ -325,7 +327,7 @@ module SAFT::V2
         xml.SystemEntryTime(struct.system_entry_time.strftime("%FT%T")) if struct.system_entry_time
         xml.OwnerID(struct.owner_id) if struct.owner_id
 
-      when Types::Transaction
+      when Types::Transaction.name.split("::").last
         xml.TransactionID(struct.transaction_id) if struct.transaction_id
         xml.Period(struct.period) if struct.period
         xml.PeriodYear(struct.period_year) if struct.period_year
@@ -341,7 +343,7 @@ module SAFT::V2
           xml.Line { build(line) }
         end
 
-      when Types::Journal
+      when Types::Journal.name.split("::").last
         xml.JournalID(struct.journal_id) if struct.journal_id
         xml.Description(struct.description) if struct.description
         xml.Type(struct.type) if struct.type
@@ -349,7 +351,7 @@ module SAFT::V2
           xml.Transaction { build(transaction) }
         end
 
-      when Types::GeneralLedgerEntries
+      when Types::GeneralLedgerEntries.name.split("::").last
         xml.NumberOfEntries(struct.number_of_entries) if struct.number_of_entries
         xml.TotalDebit(struct.total_debit.to_s("F")) if struct.total_debit
         xml.TotalCredit(struct.total_credit.to_s("F")) if struct.total_credit
