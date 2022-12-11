@@ -207,10 +207,21 @@ module SAFT::V2
             }
             t.tbody {
               @accounts.each do |account|
+                std_account = SAFT::V2::Norway
+                  .std_account(account.standard_account_id)
+                std_account_title = "Not found"
+                if std_account
+                  std_account_title = <<~TEXT
+                    Account no #{std_account.number}
+                    #{std_account.description_en}
+                    #{std_account.description_no}
+                  TEXT
+                end
+
                 t.tr {
                   t.td(account.account_id)
                   t.td(account.account_description)
-                  t.td(account.standard_account_id)
+                  t.td(account.standard_account_id, title: std_account_title)
                   t.td {
                     t.div(class: "flex justify-between") {
                       if account.opening_debit_balance
@@ -302,12 +313,25 @@ module SAFT::V2
             }
             t.tbody {
               @tax_table.each { |table|
+                vat_code = SAFT::V2::Norway
+                  .vat_code(detail.standard_tax_code)
+                vat_code_title = "Not found"
+                if std_account
+                  vat_code_title = <<~TEXT
+                    Vat Code #{std_account.code}
+                    #{std_account.description_en}
+                    #{std_account.description_no}
+                    #{HTML.format_big_decimal(std_account.tax_rate) if std_account.tax_rate}
+                    #{"Can be used for compensation" if std_account.compensation}
+                  TEXT
+                end
+
                 table.tax_code_details.each { |detail|
                   t.tr {
                     t.td(detail.tax_code)
                     t.td(detail.description)
                     t.td(detail.country)
-                    t.td(detail.standard_tax_code)
+                    t.td(detail.standard_tax_code, title: vat_code_title)
                     t.td(detail.tax_percentage, class: "text-right")
                     t.td(class: "text-right") { detail.base_rates.each { t.div(_1) } }
                     t.td(class: "pl-2") {
