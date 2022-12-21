@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.summary = "SAF-T parser and writer"
   spec.authors = ["Dodo developer", "Simon Toivo Telhaug"]
   spec.email = ["simon.toivo.telhaug@dev.dodo.no"]
-  spec.homepage = "http://tba.no"
+  spec.homepage = "https://github.com/dodoas/ruby-saft"
 
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
@@ -19,9 +19,10 @@ Gem::Specification.new do |spec|
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
-    `git ls-files -z`.split("\x0").reject do |f|
-      (f == __FILE__) || f.match(%r{\A(?:(?:test|spec|features)/|\.(?:git))})
-    end
+    `git ls-files -z`.split("\x0")
+      .reject { |f| f == __FILE__ }
+      .reject { |f| f.match(%r{\A(?:(?:test|spec|features)/|\.(?:git))}) }
+      .reject { |f| f.start_with? "docs/" }
   end
 
   spec.bindir = "exe"
@@ -31,5 +32,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency("zeitwerk", "~> 2.5")
   spec.add_dependency("dry-struct", "~> 1.4")
   spec.add_dependency("nokogiri", "~> 1.13")
-  spec.add_dependency("tubby", "~> 1")
 end
