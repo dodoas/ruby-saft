@@ -17,12 +17,9 @@ module SAFT::V2
       # https://nokogiri.org/rdoc/Nokogiri/XML/SyntaxError.html
     end
 
-    def valid?
-      @xml_errors.none?
-    end
+    def valid? = @xml_errors.none?
+    def invalid? = !valid?
 
-    def errors
-      @xml_errors
-    end
+    def errors = @xml_errors
   end
 end

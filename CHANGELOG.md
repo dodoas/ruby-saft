@@ -1,6 +1,6 @@
 ## [Unreleased]
 
-## [0.1.1] - 2023-04-28
+## [0.2.1]
 
 - add invalid? to SAFT::V2::XsdValidate
 
