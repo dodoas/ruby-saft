@@ -1,8 +1,8 @@
-image: ruby:3.1.2
+image: ruby:3.2.2
 
 before_script:
   - ruby --version
-  - gem install bundler:2.3.26
+  - gem install bundler:2.4.12
   - bundle install --jobs "$(nproc)" && bundle check
 
 check:
