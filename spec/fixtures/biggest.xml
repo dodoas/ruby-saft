@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AuditFile xmlns="urn:StandardAuditFile-Taxation-Financial:NO">
   <Header>
-    <AuditFileVersion>1.10</AuditFileVersion>
+    <AuditFileVersion>1.30</AuditFileVersion>
     <AuditFileCountry>NO</AuditFileCountry>
     <AuditFileDateCreated>2022-11-14</AuditFileDateCreated>
     <SoftwareCompanyName>AccWare</SoftwareCompanyName>
@@ -130,9 +130,8 @@
       <Account>
         <AccountID>1920</AccountID>
         <AccountDescription>Bank Account</AccountDescription>
-        <StandardAccountID>19</StandardAccountID>
-        <GroupingCategory>A</GroupingCategory>
-        <GroupingCode>A</GroupingCode>
+        <GroupingCategory>balanseverdiForOmloepsmiddel</GroupingCategory>
+        <GroupingCode>1920</GroupingCode>
         <AccountType>GL</AccountType>
         <AccountCreationDate>1998-01-01</AccountCreationDate>
         <OpeningDebitBalance>10.0</OpeningDebitBalance>
@@ -141,6 +140,8 @@
       <Account>
         <AccountID>1920</AccountID>
         <AccountDescription>Bank Account</AccountDescription>
+        <GroupingCategory>balanseverdiForOmloepsmiddel</GroupingCategory>
+        <GroupingCode>1920</GroupingCode>
         <AccountType>GL</AccountType>
         <OpeningCreditBalance>12.0</OpeningCreditBalance>
         <ClosingCreditBalance>13.0</ClosingCreditBalance>
@@ -152,9 +153,11 @@
         <Address/>
         <CustomerID>C1</CustomerID>
         <SelfBillingIndicator>No</SelfBillingIndicator>
-        <AccountID>1500:12</AccountID>
-        <OpeningDebitBalance>1.0</OpeningDebitBalance>
-        <ClosingDebitBalance>2.0</ClosingDebitBalance>
+        <BalanceAccount>
+          <AccountID>1500:12</AccountID>
+          <OpeningDebitBalance>1.0</OpeningDebitBalance>
+          <ClosingDebitBalance>2.0</ClosingDebitBalance>
+        </BalanceAccount>
         <PartyInfo>
           <PaymentTerms>
             <Days>5</Days>
@@ -182,13 +185,19 @@
         <Name>Acme the second</Name>
         <Address/>
         <CustomerID>C2</CustomerID>
-        <OpeningCreditBalance>3.0</OpeningCreditBalance>
-        <ClosingCreditBalance>4.0</ClosingCreditBalance>
+        <BalanceAccount>
+          <OpeningCreditBalance>3.0</OpeningCreditBalance>
+          <ClosingCreditBalance>4.0</ClosingCreditBalance>
+        </BalanceAccount>
       </Customer>
       <Customer>
         <Name>Acme the Suied</Name>
         <Address/>
         <CustomerID>C3</CustomerID>
+        <BalanceAccount>
+          <OpeningCreditBalance>0.0</OpeningCreditBalance>
+          <ClosingCreditBalance>0.0</ClosingCreditBalance>
+        </BalanceAccount>
       </Customer>
     </Customers>
     <Suppliers>
@@ -197,9 +206,11 @@
         <Address/>
         <SupplierID>S1</SupplierID>
         <SelfBillingIndicator>No</SelfBillingIndicator>
-        <AccountID>1500:12</AccountID>
-        <OpeningDebitBalance>1.0</OpeningDebitBalance>
-        <ClosingDebitBalance>2.0</ClosingDebitBalance>
+        <BalanceAccount>
+          <AccountID>1500:12</AccountID>
+          <OpeningDebitBalance>1.0</OpeningDebitBalance>
+          <ClosingDebitBalance>2.0</ClosingDebitBalance>
+        </BalanceAccount>
         <PartyInfo>
           <PaymentTerms>
             <Days>5</Days>
@@ -227,13 +238,19 @@
         <Name>Been the second</Name>
         <Address/>
         <SupplierID>S2</SupplierID>
-        <OpeningCreditBalance>3.0</OpeningCreditBalance>
-        <ClosingCreditBalance>4.0</ClosingCreditBalance>
+        <BalanceAccount>
+          <OpeningCreditBalance>3.0</OpeningCreditBalance>
+          <ClosingCreditBalance>4.0</ClosingCreditBalance>
+        </BalanceAccount>
       </Supplier>
       <Supplier>
         <Name>Been the Suied</Name>
         <Address/>
         <SupplierID>S3</SupplierID>
+        <BalanceAccount>
+          <OpeningCreditBalance>0.0</OpeningCreditBalance>
+          <ClosingCreditBalance>0.0</ClosingCreditBalance>
+        </BalanceAccount>
       </Supplier>
     </Suppliers>
     <TaxTable>
@@ -328,11 +345,14 @@
         <PeriodYear>2020</PeriodYear>
         <TransactionDate>2020-03-10</TransactionDate>
         <SourceID>Boho</SourceID>
+        <VoucherType>B</VoucherType>
+        <VoucherDescription>Bank</VoucherDescription>
         <TransactionType>normal</TransactionType>
         <Description>From the bank</Description>
         <BatchID>12</BatchID>
         <SystemEntryDate>2020-03-12</SystemEntryDate>
         <GLPostingDate>2020-03-10</GLPostingDate>
+        <ModificationDate>2020-03-18</ModificationDate>
         <SystemID>12-651-8951</SystemID>
         <Line>
           <RecordID>line-18</RecordID>
@@ -359,16 +379,16 @@
             <Country>NO</Country>
             <TaxBase>9000.0</TaxBase>
             <TaxBaseDescription>Some random description</TaxBaseDescription>
-            <TaxAmount>
+            <CreditTaxAmount>
               <Amount>593.0</Amount>
-            </TaxAmount>
+            </CreditTaxAmount>
             <TaxExemptionReason>550</TaxExemptionReason>
             <TaxDeclarationPeriod>2020-04</TaxDeclarationPeriod>
           </TaxInformation>
           <TaxInformation>
-            <TaxAmount>
+            <CreditTaxAmount>
               <Amount>5.0</Amount>
-            </TaxAmount>
+            </CreditTaxAmount>
           </TaxInformation>
           <ReferenceNumber>1512</ReferenceNumber>
           <CID>21</CID>

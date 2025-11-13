@@ -200,7 +200,8 @@ module SAFT::V2
               t.tr {
                 t.th("Id")
                 t.th("Description")
-                t.th("Std account")
+                t.th("GroupingCategory")
+                t.th("GroupingCode")
                 t.th("Opening balance")
                 t.th("Closing balance")
                 t.th("Rest")
@@ -208,20 +209,26 @@ module SAFT::V2
             }
             t.tbody {
               @accounts.each do |account|
-                std_account = SAFT::V2::Norway.std_account(account.standard_account_id)
-                std_account_title = "Not found"
-                if std_account
-                  std_account_title = <<~TEXT
-                    Account no #{std_account.number}
-                    #{std_account.description_en}
-                    #{std_account.description_no}
+                category = SAFT::V2::Norway.grouping_category(account.grouping_code)
+                code_title = category_title = "Not found"
+                if category
+                  code_title = <<~TEXT
+                    Grouping code #{category.grouping_code}
+                    #{category.code_description_en}
+                    #{category.code_description_no}
+                  TEXT
+                  category_title = <<~TEXT
+                    Grouping category #{category.grouping_category}
+                    #{category.category_description_en}
+                    #{category.category_description_no}
                   TEXT
                 end
 
                 t.tr {
                   t.td(account.account_id)
                   t.td(account.account_description)
-                  t.td(account.standard_account_id, title: std_account_title)
+                  t.td(account.grouping_category, title: category_title)
+                  t.td(account.grouping_code, title: code_title)
                   t.td {
                     t.div(class: "flex justify-between") {
                       if account.opening_debit_balance
@@ -257,7 +264,8 @@ module SAFT::V2
                             .except(
                               :account_id,
                               :account_description,
-                              :standard_account_id,
+                              :grouping_category,
+                              :grouping_code,
                               :opening_debit_balance,
                               :opening_credit_balance,
                               :closing_debit_balance,
@@ -542,7 +550,7 @@ module SAFT::V2
       def title
         <<~TEXT
           #{account.account_id} #{account.account_description}
-          Std account #{account.standard_account_id}
+          Grouping category and code #{account.grouping_category} / #{account.grouping_code}
           opening balance #{HTML.format_big_decimal(account.opening_debit_balance || -account.opening_credit_balance)}
           closing balance #{HTML.format_big_decimal(account.closing_debit_balance || -account.closing_credit_balance)}
         TEXT

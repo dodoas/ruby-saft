@@ -55,7 +55,8 @@ module SAFT::V2::Types
         klass = Class.new(Dry::Struct) do
           attribute(:analysis_type, base::SAFcodeType)
           attribute(:analysis_id, base::SAFlongtextType)
-          attribute(:analysis_amount, base::AmountStructure.optional.meta(omittable: true))
+          attribute(:debit_analysis_amount, base::AmountStructure.optional.meta(omittable: true))
+          attribute(:credit_analysis_amount, base::AmountStructure.optional.meta(omittable: true))
         end
 
         base.const_set(:AnalysisStructure, klass)
@@ -69,12 +70,13 @@ module SAFT::V2::Types
 
         klass = Class.new(Dry::Struct) do
           attribute(:tax_type, base::SAFcodeType.optional.meta(omittable: true))
-          attribute(:tax_code, base::SAFmiddle1textType.optional.meta(omittable: true))
+          attribute(:tax_code, base::SAFmiddle2textType.optional.meta(omittable: true))
           attribute(:tax_percentage, Types::Decimal.optional.meta(omittable: true))
           attribute(:country, base::ISOCountryCode.optional.meta(omittable: true))
           attribute(:tax_base, Types::Decimal.optional.meta(omittable: true))
           attribute(:tax_base_description, base::SAFmiddle2textType.optional.meta(omittable: true))
-          attribute(:tax_amount, base::AmountStructure)
+          attribute(:debit_tax_amount, base::AmountStructure.optional.meta(omittable: true))
+          attribute(:credit_tax_amount, base::AmountStructure.optional.meta(omittable: true))
           attribute(:tax_exemption_reason, base::SAFmiddle2textType.optional.meta(omittable: true))
           attribute(:tax_declaration_period, base::SAFmiddle1textType.optional.meta(omittable: true))
         end
@@ -143,13 +145,13 @@ module SAFT::V2::Types
         base.const_set(:PartyInfoStructure, klass)
 
         klass = Class.new(Dry::Struct) do
-          attribute(:street_name, base::SAFmiddle2textType.optional.meta(omittable: true))
-          attribute(:number, base::SAFshorttextType.optional.meta(omittable: true))
-          attribute(:additional_address_detail, base::SAFmiddle2textType.optional.meta(omittable: true))
+          attribute(:street_name, base::SAFlongtextType.optional.meta(omittable: true))
+          attribute(:number, base::SAFmiddle2textType.optional.meta(omittable: true))
+          attribute(:additional_address_detail, base::SAFlongtextType.optional.meta(omittable: true))
           attribute(:building, base::SAFmiddle1textType.optional.meta(omittable: true))
-          attribute(:city, base::SAFmiddle1textType.optional.meta(omittable: true))
-          attribute(:postal_code, base::SAFshorttextType.optional.meta(omittable: true))
-          attribute(:region, base::SAFmiddle1textType.optional.meta(omittable: true))
+          attribute(:city, base::SAFlongtextType.optional.meta(omittable: true))
+          attribute(:postal_code, base::SAFmiddle2textType.optional.meta(omittable: true))
+          attribute(:region, base::SAFlongtextType.optional.meta(omittable: true))
           attribute(:country, base::ISOCountryCode.optional.meta(omittable: true))
           attribute(:address_type, base::AddressType.optional.meta(omittable: true))
         end
@@ -192,7 +194,7 @@ module SAFT::V2::Types
 
         klass = Class.new(Dry::Struct) do
           attribute(:registration_number, base::SAFmiddle1textType.optional.meta(omittable: true))
-          attribute(:name, base::SAFmiddle2textType)
+          attribute(:name, base::SAFlongtextType)
           attribute(:addresses, Types::Array.of(base::AddressStructure))
           attribute(:contacts, Types::Array.of(base::ContactInformationStructure).optional.meta(omittable: true))
           attribute(:tax_registrations, Types::Array.of(base::TaxIDStructure).optional.meta(omittable: true))
@@ -203,7 +205,7 @@ module SAFT::V2::Types
 
         klass = Class.new(base::CompanyStructure) do
           attribute(:registration_number, base::SAFmiddle1textType)
-          attribute(:name, base::SAFmiddle2textType)
+          attribute(:name, base::SAFlongtextType)
           attribute(:addresses, Types::Array.of(base::AddressStructure))
           attribute(:contacts, Types::Array.of(base::ContactInformationStructure))
           attribute(:tax_registrations, Types::Array.of(base::TaxIDStructure).optional.meta(omittable: true))
@@ -223,7 +225,7 @@ module SAFT::V2::Types
           attribute(:software_version, base::SAFshorttextType)
           attribute(:company, base::CompanyHeaderStructure)
           attribute(:default_currency_code, base::ISOCurrencyCode)
-          attribute(:selection_criteria, base::SelectionCriteriaStructure.optional.meta(omittable: true))
+          attribute(:selection_criteria, base::SelectionCriteriaStructure)
           attribute(:header_comment, base::SAFlongtextType.optional.meta(omittable: true))
         end
 
@@ -232,7 +234,7 @@ module SAFT::V2::Types
         klass = Class.new(base::HeaderStructure) do
           attribute(:tax_accounting_basis, base::SAFshorttextType)
           attribute(:tax_entity, base::SAFmiddle2textType.optional.meta(omittable: true))
-          attribute(:user_id, base::SAFmiddle1textType.optional.meta(omittable: true))
+          attribute(:user_id, base::SAFlongtextType.optional.meta(omittable: true))
           attribute(:audit_file_sender, base::CompanyStructure.optional.meta(omittable: true))
         end
 
@@ -241,9 +243,8 @@ module SAFT::V2::Types
         klass = Class.new(Dry::Struct) do
           attribute(:account_id, base::SAFmiddle2textType)
           attribute(:account_description, base::SAFlongtextType)
-          attribute(:standard_account_id, base::SAFmiddle1textType.optional.meta(omittable: true))
-          attribute(:grouping_category, base::SAFmiddle1textType.optional.meta(omittable: true))
-          attribute(:grouping_code, base::SAFmiddle1textType.optional.meta(omittable: true))
+          attribute(:grouping_category, base::SAFlongtextType)
+          attribute(:grouping_code, base::SAFmiddle1textType)
           attribute(:account_type, base::SAFshorttextType)
           attribute(:account_creation_date, Types::Date.optional.meta(omittable: true))
           attribute(:opening_debit_balance, base::SAFmonetaryType.optional.meta(omittable: true))
@@ -254,14 +255,20 @@ module SAFT::V2::Types
 
         base.const_set(:Account, klass)
 
-        klass = Class.new(base::CompanyStructure) do
-          attribute(:customer_id, base::SAFmiddle1textType)
-          attribute(:self_billing_indicator, base::SAFcodeType.optional.meta(omittable: true))
+        klass = Class.new(Dry::Struct) do
           attribute(:account_id, base::SAFmiddle2textType.optional.meta(omittable: true))
           attribute(:opening_debit_balance, base::SAFmonetaryType.optional.meta(omittable: true))
           attribute(:opening_credit_balance, base::SAFmonetaryType.optional.meta(omittable: true))
           attribute(:closing_debit_balance, base::SAFmonetaryType.optional.meta(omittable: true))
           attribute(:closing_credit_balance, base::SAFmonetaryType.optional.meta(omittable: true))
+        end
+
+        base.const_set(:BalanceAccount, klass)
+
+        klass = Class.new(base::CompanyStructure) do
+          attribute(:customer_id, base::SAFmiddle1textType)
+          attribute(:self_billing_indicator, base::SAFcodeType.optional.meta(omittable: true))
+          attribute(:balance_accounts, Types::Array.of(base::BalanceAccount))
           attribute(:party_info, base::PartyInfoStructure.optional.meta(omittable: true))
         end
 
@@ -270,18 +277,14 @@ module SAFT::V2::Types
         klass = Class.new(base::CompanyStructure) do
           attribute(:supplier_id, base::SAFmiddle1textType)
           attribute(:self_billing_indicator, base::SAFcodeType.optional.meta(omittable: true))
-          attribute(:account_id, base::SAFmiddle2textType.optional.meta(omittable: true))
-          attribute(:opening_debit_balance, base::SAFmonetaryType.optional.meta(omittable: true))
-          attribute(:opening_credit_balance, base::SAFmonetaryType.optional.meta(omittable: true))
-          attribute(:closing_debit_balance, base::SAFmonetaryType.optional.meta(omittable: true))
-          attribute(:closing_credit_balance, base::SAFmonetaryType.optional.meta(omittable: true))
+          attribute(:balance_accounts, Types::Array.of(base::BalanceAccount))
           attribute(:party_info, base::PartyInfoStructure.optional.meta(omittable: true))
         end
 
         base.const_set(:Supplier, klass)
 
         klass = Class.new(Dry::Struct) do
-          attribute(:tax_code, base::SAFmiddle1textType)
+          attribute(:tax_code, base::SAFmiddle2textType)
           attribute(:effective_date, Types::Date.optional.meta(omittable: true))
           attribute(:expiration_date, Types::Date.optional.meta(omittable: true))
           attribute(:description, base::SAFlongtextType.optional.meta(omittable: true))
@@ -378,11 +381,14 @@ module SAFT::V2::Types
           attribute(:period_year, Types::Integer)
           attribute(:transaction_date, Types::Date)
           attribute(:source_id, base::SAFmiddle1textType.optional.meta(omittable: true))
+          attribute(:voucher_type, base::SAFmiddle2textType.optional.meta(omittable: true))
+          attribute(:voucher_description, base::SAFmiddle2textType.optional.meta(omittable: true))
           attribute(:transaction_type, base::SAFshorttextType.optional.meta(omittable: true))
           attribute(:description, base::SAFlongtextType)
           attribute(:batch_id, base::SAFmiddle1textType.optional.meta(omittable: true))
           attribute(:system_entry_date, Types::Date)
           attribute(:gl_posting_date, Types::Date)
+          attribute(:modification_date, Types::Date.optional.meta(omittable: true))
           # ignored since xsd said "Not in use."
           # attribute :CustomerID, base::SAFmiddle1textType.optional.meta(omittable: true)
           # ignored since xsd said "Not in use."
