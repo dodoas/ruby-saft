@@ -130,7 +130,8 @@ module SAFT::V2
           {
             analysis_type: xml.at_xpath("AnalysisType")&.content,
             analysis_id: xml.at_xpath("AnalysisID")&.content,
-            analysis_amount: parse(Types::AmountStructure, xml.at_xpath("AnalysisAmount")),
+            debit_analysis_amount: parse(Types::AmountStructure, xml.at_xpath("DebitAnalysisAmount")),
+            credit_analysis_amount: parse(Types::AmountStructure, xml.at_xpath("CreditAnalysisAmount")),
           }.compact
 
         when Types::AnalysisPartyInfoStructure.name
@@ -147,7 +148,8 @@ module SAFT::V2
             country: xml.at_xpath("Country")&.content,
             tax_base: xml.at_xpath("TaxBase")&.content,
             tax_base_description: xml.at_xpath("TaxBaseDescription")&.content,
-            tax_amount: parse(Types::AmountStructure, xml.at_xpath("TaxAmount")),
+            debit_tax_amount: parse(Types::AmountStructure, xml.at_xpath("DebitTaxAmount")),
+            credit_tax_amount: parse(Types::AmountStructure, xml.at_xpath("CreditTaxAmount")),
             tax_exemption_reason: xml.at_xpath("TaxExemptionReason")&.content,
             tax_declaration_period: xml.at_xpath("TaxDeclarationPeriod")&.content,
           }.compact
@@ -216,11 +218,7 @@ module SAFT::V2
             **parse(Types::CompanyStructure, xml),
             customer_id: xml.at_xpath("CustomerID")&.content,
             self_billing_indicator: xml.at_xpath("SelfBillingIndicator")&.content,
-            account_id: xml.at_xpath("AccountID")&.content,
-            opening_debit_balance: xml.at_xpath("OpeningDebitBalance")&.content,
-            opening_credit_balance: xml.at_xpath("OpeningCreditBalance")&.content,
-            closing_debit_balance: xml.at_xpath("ClosingDebitBalance")&.content,
-            closing_credit_balance: xml.at_xpath("ClosingCreditBalance")&.content,
+            balance_accounts: xml.xpath("BalanceAccount").map { |node| parse(Types::BalanceAccount, node) }.then { _1.empty? ? nil : _1 },
             party_info: parse(Types::PartyInfoStructure, xml.at_xpath("PartyInfo")),
           }.compact
 
@@ -229,12 +227,17 @@ module SAFT::V2
             **parse(Types::CompanyStructure, xml),
             supplier_id: xml.at_xpath("SupplierID")&.content,
             self_billing_indicator: xml.at_xpath("SelfBillingIndicator")&.content,
+            balance_accounts: xml.xpath("BalanceAccount").map { |node| parse(Types::BalanceAccount, node) }.then { _1.empty? ? nil : _1 },
+            party_info: parse(Types::PartyInfoStructure, xml.at_xpath("PartyInfo")),
+          }.compact
+
+        when Types::BalanceAccount.name
+          {
             account_id: xml.at_xpath("AccountID")&.content,
             opening_debit_balance: xml.at_xpath("OpeningDebitBalance")&.content,
             opening_credit_balance: xml.at_xpath("OpeningCreditBalance")&.content,
             closing_debit_balance: xml.at_xpath("ClosingDebitBalance")&.content,
             closing_credit_balance: xml.at_xpath("ClosingCreditBalance")&.content,
-            party_info: parse(Types::PartyInfoStructure, xml.at_xpath("PartyInfo")),
           }.compact
 
         when Types::TaxCodeDetails.name
@@ -320,11 +323,14 @@ module SAFT::V2
             period_year: xml.at_xpath("PeriodYear")&.content,
             transaction_date: xml.at_xpath("TransactionDate")&.content,
             source_id: xml.at_xpath("SourceID")&.content,
+            voucher_type: xml.at_xpath("VoucherType")&.content,
+            voucher_description: xml.at_xpath("VoucherDescription")&.content,
             transaction_type: xml.at_xpath("TransactionType")&.content,
             description: xml.at_xpath("Description")&.content,
             batch_id: xml.at_xpath("BatchID")&.content,
             system_entry_date: xml.at_xpath("SystemEntryDate")&.content,
             gl_posting_date: xml.at_xpath("GLPostingDate")&.content,
+            modification_date: xml.at_xpath("ModificationDate")&.content,
             system_id: xml.at_xpath("SystemID")&.content,
             lines: xml.xpath("Line").map { |node| parse(Types::Line, node) }.then { _1.empty? ? nil : _1 },
           }.compact

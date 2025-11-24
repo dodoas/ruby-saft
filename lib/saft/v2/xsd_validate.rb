@@ -3,7 +3,7 @@
 require "nokogiri"
 require "pathname"
 
-XSD_PATH = Pathname.new(__dir__) + ".." + ".." + ".." + "vendor" + "SAF-T_Financial_Schema_NO_1.10.xsd"
+XSD_PATH = Pathname.new(__dir__) + ".." + ".." + ".." + "vendor" + "Norwegian_SAF-T_Financial_Schema_v_1.30.xsd"
 
 module SAFT::V2
   class XsdValidate

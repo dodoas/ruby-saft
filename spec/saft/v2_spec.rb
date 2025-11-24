@@ -43,13 +43,21 @@ RSpec.describe SAFT::V2 do
   let(:minimal_valid) {
     {
       header: {
-        audit_file_version: "1.10",
+        audit_file_version: "1.30",
         audit_file_country: "NO",
         audit_file_date_created: Date.civil(2022, 11, 14),
         software_company_name: "Example",
         software_id: "Example.no",
         software_version: "1.0",
         default_currency_code: "NOK",
+        selection_criteria: {
+          tax_reporting_jurisdiction: "The pinup man",
+          company_entity: "The pinup CO",
+          selection_start_date: Date.civil(2020, 1, 1),
+          selection_end_date: Date.civil(2020, 12, 31),
+          document_type: "All kind are included",
+          other_criterias: ["Elm is cool", "Ruby is cool", "Javascript is \"cool\""],
+        },
         tax_accounting_basis: "A",
         company: {
           registration_number: "Regi",
@@ -88,7 +96,8 @@ RSpec.describe SAFT::V2 do
         {
           account_id: "1920",
           account_description: "Bank Account",
-          standard_account_id: "19",
+          grouping_category: "balanseverdiForOmloepsmiddel",
+          grouping_code: "1920",
           account_type: "GL",
           account_creation_date: Date.civil(1998, 1, 1),
         },
@@ -103,7 +112,7 @@ RSpec.describe SAFT::V2 do
           valid?: false,
           errors: [
             have_attributes(
-              to_s: "26:0: ERROR: Element '{urn:StandardAuditFile-Taxation-Financial:NO}Account': Missing child element(s). Expected is one of ( {urn:StandardAuditFile-Taxation-Financial:NO}OpeningDebitBalance, {urn:StandardAuditFile-Taxation-Financial:NO}OpeningCreditBalance ).",
+              to_s: "36:0: ERROR: Element '{urn:StandardAuditFile-Taxation-Financial:NO}Account': Missing child element(s). Expected is one of ( {urn:StandardAuditFile-Taxation-Financial:NO}OpeningDebitBalance, {urn:StandardAuditFile-Taxation-Financial:NO}OpeningCreditBalance ).",
             ),
           ],
         ),
@@ -114,7 +123,7 @@ RSpec.describe SAFT::V2 do
     let(:biggest) {
       {
         header: {
-          audit_file_version: "1.10",
+          audit_file_version: "1.30",
           audit_file_country: "NO",
           audit_file_date_created: Date.civil(2022, 11, 14),
           software_company_name: "AccWare",
@@ -255,9 +264,8 @@ RSpec.describe SAFT::V2 do
             {
               account_id: "1920",
               account_description: "Bank Account",
-              standard_account_id: "19",
-              grouping_category: "A",
-              grouping_code: "A",
+              grouping_category: "balanseverdiForOmloepsmiddel",
+              grouping_code: "1920",
               account_type: "GL",
               account_creation_date: Date.civil(1998, 1, 1),
               opening_debit_balance: BigDecimal("10.0"),
@@ -266,6 +274,8 @@ RSpec.describe SAFT::V2 do
             {
               account_id: "1920",
               account_description: "Bank Account",
+              grouping_category: "balanseverdiForOmloepsmiddel",
+              grouping_code: "1920",
               account_type: "GL",
               opening_credit_balance: BigDecimal("12.0"),
               closing_credit_balance: BigDecimal("13.0"),
@@ -279,9 +289,11 @@ RSpec.describe SAFT::V2 do
               ],
               customer_id: "C1",
               self_billing_indicator: "No",
-              account_id: "1500:12",
-              opening_debit_balance: BigDecimal("1.0"),
-              closing_debit_balance: BigDecimal("2.0"),
+              balance_accounts: [{
+                account_id: "1500:12",
+                opening_debit_balance: BigDecimal("1.0"),
+                closing_debit_balance: BigDecimal("2.0"),
+              }],
               party_info: {
                 payment_terms: {
                   days: 5,
@@ -307,14 +319,20 @@ RSpec.describe SAFT::V2 do
                 {},
               ],
               customer_id: "C2",
-              opening_credit_balance: BigDecimal("3.0"),
-              closing_credit_balance: BigDecimal("4.0"),
+              balance_accounts: [{
+                opening_credit_balance: BigDecimal("3.0"),
+                closing_credit_balance: BigDecimal("4.0"),
+              }],
             },
             {
               name: "Acme the Suied",
               addresses: [
                 {},
               ],
+              balance_accounts: [{
+                opening_credit_balance: BigDecimal("0.0"),
+                closing_credit_balance: BigDecimal("0.0"),
+              }],
               customer_id: "C3",
             },
           ],
@@ -326,9 +344,11 @@ RSpec.describe SAFT::V2 do
               ],
               supplier_id: "S1",
               self_billing_indicator: "No",
-              account_id: "1500:12",
-              opening_debit_balance: BigDecimal("1.0"),
-              closing_debit_balance: BigDecimal("2.0"),
+              balance_accounts: [{
+                account_id: "1500:12",
+                opening_debit_balance: BigDecimal("1.0"),
+                closing_debit_balance: BigDecimal("2.0"),
+              }],
               party_info: {
                 payment_terms: {
                   days: 5,
@@ -354,14 +374,20 @@ RSpec.describe SAFT::V2 do
                 {},
               ],
               supplier_id: "S2",
-              opening_credit_balance: BigDecimal("3.0"),
-              closing_credit_balance: BigDecimal("4.0"),
+              balance_accounts: [{
+                opening_credit_balance: BigDecimal("3.0"),
+                closing_credit_balance: BigDecimal("4.0"),
+              }],
             },
             {
               name: "Been the Suied",
               addresses: [
                 {},
               ],
+              balance_accounts: [{
+                opening_credit_balance: BigDecimal("0.0"),
+                closing_credit_balance: BigDecimal("0.0"),
+              }],
               supplier_id: "S3",
             },
           ],
@@ -462,11 +488,14 @@ RSpec.describe SAFT::V2 do
                   period_year: 2020,
                   transaction_date: Date.civil(2020, 3, 10),
                   source_id: "Boho",
+                  voucher_type: "B",
+                  voucher_description: "Bank",
                   transaction_type: "normal",
                   description: "From the bank",
                   batch_id: "12",
                   system_entry_date: Date.civil(2020, 3, 12),
                   gl_posting_date: Date.civil(2020, 3, 10),
+                  modification_date: Date.civil(2020, 3, 18),
                   system_id: "12-651-8951",
                   lines: [
                     {
@@ -497,14 +526,14 @@ RSpec.describe SAFT::V2 do
                           country: "NO",
                           tax_base: BigDecimal("9000.0"),
                           tax_base_description: "Some random description",
-                          tax_amount: {
+                          credit_tax_amount: {
                             amount: BigDecimal("593.0"),
                           },
                           tax_exemption_reason: "550",
                           tax_declaration_period: "2020-04",
                         },
                         {
-                          tax_amount: {
+                          credit_tax_amount: {
                             amount: BigDecimal("5.0"),
                           },
                         },

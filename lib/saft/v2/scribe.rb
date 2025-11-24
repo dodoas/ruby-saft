@@ -62,7 +62,7 @@ module SAFT::V2
         xml.SoftwareVersion(struct.software_version)
         xml.Company { build(struct.company) }
         xml.DefaultCurrencyCode(struct.default_currency_code)
-        xml.SelectionCriteria { build(struct.selection_criteria) } if struct.selection_criteria
+        xml.SelectionCriteria { build(struct.selection_criteria) }
         xml.HeaderComment(struct.header_comment) if struct.header_comment
         xml.TaxAccountingBasis(struct.tax_accounting_basis)
         xml.TaxEntity(struct.tax_entity) if struct.tax_entity
@@ -73,22 +73,30 @@ module SAFT::V2
         build_company_structure(struct)
         xml.CustomerID(struct.customer_id)
         xml.SelfBillingIndicator(struct.self_billing_indicator) if struct.self_billing_indicator
-        xml.AccountID(struct.account_id) if struct.account_id
-        xml.OpeningDebitBalance(struct.opening_debit_balance.to_s("F")) if struct.opening_debit_balance
-        xml.OpeningCreditBalance(struct.opening_credit_balance.to_s("F")) if struct.opening_credit_balance
-        xml.ClosingDebitBalance(struct.closing_debit_balance.to_s("F")) if struct.closing_debit_balance
-        xml.ClosingCreditBalance(struct.closing_credit_balance.to_s("F")) if struct.closing_credit_balance
+        struct.balance_accounts.each do |balance|
+          xml.BalanceAccount {
+            xml.AccountID(balance.account_id) if balance.account_id
+            xml.OpeningDebitBalance(balance.opening_debit_balance.to_s("F")) if balance.opening_debit_balance
+            xml.OpeningCreditBalance(balance.opening_credit_balance.to_s("F")) if balance.opening_credit_balance
+            xml.ClosingDebitBalance(balance.closing_debit_balance.to_s("F")) if balance.closing_debit_balance
+            xml.ClosingCreditBalance(balance.closing_credit_balance.to_s("F")) if balance.closing_credit_balance
+          }
+        end
         xml.PartyInfo { build(struct.party_info) } if struct.party_info
 
       when Types::Supplier.name.split("::").last
         build_company_structure(struct)
         xml.SupplierID(struct.supplier_id)
         xml.SelfBillingIndicator(struct.self_billing_indicator) if struct.self_billing_indicator
-        xml.AccountID(struct.account_id) if struct.account_id
-        xml.OpeningDebitBalance(struct.opening_debit_balance.to_s("F")) if struct.opening_debit_balance
-        xml.OpeningCreditBalance(struct.opening_credit_balance.to_s("F")) if struct.opening_credit_balance
-        xml.ClosingDebitBalance(struct.closing_debit_balance.to_s("F")) if struct.closing_debit_balance
-        xml.ClosingCreditBalance(struct.closing_credit_balance.to_s("F")) if struct.closing_credit_balance
+        struct.balance_accounts.each do |balance|
+          xml.BalanceAccount {
+            xml.AccountID(balance.account_id) if balance.account_id
+            xml.OpeningDebitBalance(balance.opening_debit_balance.to_s("F")) if balance.opening_debit_balance
+            xml.OpeningCreditBalance(balance.opening_credit_balance.to_s("F")) if balance.opening_credit_balance
+            xml.ClosingDebitBalance(balance.closing_debit_balance.to_s("F")) if balance.closing_debit_balance
+            xml.ClosingCreditBalance(balance.closing_credit_balance.to_s("F")) if balance.closing_credit_balance
+          }
+        end
         xml.PartyInfo { build(struct.party_info) } if struct.party_info
 
       when Types::Owner.name.split("::").last
@@ -166,7 +174,8 @@ module SAFT::V2
       when Types::AnalysisStructure.name.split("::").last
         xml.AnalysisType(struct.analysis_type) if struct.analysis_type
         xml.AnalysisID(struct.analysis_id) if struct.analysis_id
-        xml.AnalysisAmount { build(struct.analysis_amount) } if struct.analysis_amount
+        xml.DebitAnalysisAmount { build(struct.debit_analysis_amount) } if struct.debit_analysis_amount
+        xml.CreditAnalysisAmount { build(struct.credit_analysis_amount) } if struct.credit_analysis_amount
 
       when Types::AnalysisPartyInfoStructure.name.split("::").last
         xml.AnalysisType(struct.analysis_type)
@@ -179,7 +188,8 @@ module SAFT::V2
         xml.Country(struct.country) if struct.country
         xml.TaxBase(struct.tax_base.to_s("F")) if struct.tax_base
         xml.TaxBaseDescription(struct.tax_base_description) if struct.tax_base_description
-        xml.TaxAmount { build(struct.tax_amount) }
+        xml.DebitTaxAmount { build(struct.debit_tax_amount) } if struct.debit_tax_amount
+        xml.CreditTaxAmount { build(struct.credit_tax_amount) } if struct.credit_tax_amount
         xml.TaxExemptionReason(struct.tax_exemption_reason) if struct.tax_exemption_reason
         xml.TaxDeclarationPeriod(struct.tax_declaration_period) if struct.tax_declaration_period
 
@@ -216,15 +226,14 @@ module SAFT::V2
         xml.SoftwareVersion(struct.software_version)
         xml.Company { build(struct.company) }
         xml.DefaultCurrencyCode(struct.default_currency_code)
-        xml.SelectionCriteria { build(struct.selection_criteria) } if struct.selection_criteria
+        xml.SelectionCriteria { build(struct.selection_criteria) }
         xml.HeaderComment(struct.header_comment) if struct.header_comment
 
       when Types::Account.name.split("::").last
         xml.AccountID(struct.account_id)
         xml.AccountDescription(struct.account_description)
-        xml.StandardAccountID(struct.standard_account_id) if struct.standard_account_id
-        xml.GroupingCategory(struct.grouping_category) if struct.grouping_category
-        xml.GroupingCode(struct.grouping_code) if struct.grouping_code
+        xml.GroupingCategory(struct.grouping_category)
+        xml.GroupingCode(struct.grouping_code)
         xml.AccountType(struct.account_type)
         xml.AccountCreationDate(struct.account_creation_date) if struct.account_creation_date
         xml.OpeningDebitBalance(struct.opening_debit_balance.to_s("F")) if struct.opening_debit_balance
@@ -333,11 +342,14 @@ module SAFT::V2
         xml.PeriodYear(struct.period_year) if struct.period_year
         xml.TransactionDate(struct.transaction_date) if struct.transaction_date
         xml.SourceID(struct.source_id) if struct.source_id
+        xml.VoucherType(struct.voucher_type) if struct.voucher_type
+        xml.VoucherDescription(struct.voucher_description) if struct.voucher_description
         xml.TransactionType(struct.transaction_type) if struct.transaction_type
         xml.Description(struct.description) if struct.description
         xml.BatchID(struct.batch_id) if struct.batch_id
         xml.SystemEntryDate(struct.system_entry_date) if struct.system_entry_date
         xml.GLPostingDate(struct.gl_posting_date) if struct.gl_posting_date
+        xml.ModificationDate(struct.modification_date) if struct.modification_date
         xml.SystemID(struct.system_id) if struct.system_id
         struct.lines&.each do |line|
           xml.Line { build(line) }
